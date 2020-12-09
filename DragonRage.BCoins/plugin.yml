@@ -1,0 +1,11 @@
+name: BCoins
+description: Plugin created by NiX Development
+author: NiX3r
+website: https://www.spigotmc.org/members/nixicz.468770/
+main: cz.nixdevelopment.bcoins.BCoins
+version: 1.5.1
+commands:
+    bcoin:
+        description: every commands are here
+    bshop:
+        description: commands for tokens shop
