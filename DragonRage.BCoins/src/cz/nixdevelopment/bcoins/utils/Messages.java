@@ -38,11 +38,11 @@ public class Messages {
                    "§c/bshop buy <klic> §7- zobrazi pocet BCoinu\n" +
                    "§c/bshop buy <klic> <hrac>§7- zobrazi pocet BCoinu\n" +
                    "§c/bshop give <klic> <hrac> §7- prida hraci BCoiny\n" +
-                   "§c/bshop create <klic> <castka> §7- odebere hraci BCoiny\n" +
-                   "§c/bshop remove <klic> §7- nastavi hraci BCoiny\n" +
-                   "§c/bshop cmd <klic> list §7- odebere hraci BCoiny\n" +
-                   "§c/bshop cmd <klic> add <cmd> §7- odebere hraci BCoiny\n" +
-                   "§c/bshop cmd <klic> remove <cmd> §7- odebere hraci BCoiny\n";
+                   "§c/bshop create <klic> <castka> §7- vytvori item\n" +
+                   "§c/bshop remove <klic> §7- smaze item\n" +
+                   "§c/bshop cmd <klic> list §7- zobrazi list prikazu itemu\n" +
+                   "§c/bshop cmd <klic> add <cmd> §7- prida prikaz do itemu\n" +
+                   "§c/bshop cmd <klic> remove <cmd> §7- odebere prikaz z itemu";
         }
     }
     
