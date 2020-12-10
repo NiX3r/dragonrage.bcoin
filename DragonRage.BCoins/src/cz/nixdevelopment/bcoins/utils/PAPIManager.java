@@ -33,9 +33,9 @@ public class PAPIManager extends PlaceholderExpansion{
         
         String output = "ERR#404";
         
-        if(identifier.equalsIgnoreCase("withbc"))
+        if(identifier.equalsIgnoreCase("bc"))
             output = String.valueOf(MySQL.getTokens(p.getUniqueId().toString())) + "BC";
-        else if(identifier.equalsIgnoreCase("withoutbc"))
+        else if(identifier.equalsIgnoreCase("nobc"))
             output = String.valueOf(MySQL.getTokens(p.getUniqueId().toString()));
         else
             output = "WrongIdentifier";
