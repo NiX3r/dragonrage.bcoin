@@ -18,7 +18,7 @@ import cz.nixdevelopment.bcoins.utils.MySQL;
 import cz.nixdevelopment.bcoins.utils.PAPIManager;
 
 public class BCoins extends JavaPlugin{
-
+    // useful message...
     public static JavaPlugin inst;
     public static ArrayList<ShopItemEvent> items = new ArrayList<ShopItemEvent>();
     public static String Prefix = "§4§l[§cBCoin§4§l] §7»";
