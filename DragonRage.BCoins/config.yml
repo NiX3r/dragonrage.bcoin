@@ -1,0 +1,7 @@
+Prefix: '&4&lBCoin &c» §7'
+SQL:
+    Host: 'localhost'
+    Port: 3306
+    Database: 'database'
+    User: 'user'
+    Pass: 'pass'

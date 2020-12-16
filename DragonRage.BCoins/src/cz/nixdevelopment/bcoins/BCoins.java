@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import cz.nixdevelopment.bcoins.commands.BCoinCommand;
 import cz.nixdevelopment.bcoins.commands.BShopCommand;
 import cz.nixdevelopment.bcoins.events.*;
+import cz.nixdevelopment.bcoins.instances.DatabaseInstance;
 import cz.nixdevelopment.bcoins.listeners.OnJoinListener;
 import cz.nixdevelopment.bcoins.utils.BCoinsUtil;
 import cz.nixdevelopment.bcoins.utils.DefaultFiles;
@@ -18,10 +19,12 @@ import cz.nixdevelopment.bcoins.utils.MySQL;
 import cz.nixdevelopment.bcoins.utils.PAPIManager;
 
 public class BCoins extends JavaPlugin{
-    // useful message...
+    
+    private DatabaseInstance DBS;
+    
     public static JavaPlugin inst;
     public static ArrayList<ShopItemEvent> items = new ArrayList<ShopItemEvent>();
-    public static String Prefix = "§4§l[§cBCoin§4§l] §7»";
+    public static String Prefix;
     
     private static Connection connection;
     
@@ -33,7 +36,12 @@ public class BCoins extends JavaPlugin{
             this.getPluginLoader().disablePlugin(this);
         }
         
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         DefaultFiles.BShop();
+        
+        DBS = new DatabaseInstance(getConfig().getString("SQL.Host"), getConfig().getInt("SQL.Port"), getConfig().getString("SQL.Database"), getConfig().getString("SQL.User"), getConfig().getString("SQL.Pass"));
+        Prefix = getConfig().getString("Prefix");
         
         inst = this;
         setUpDatabase();
@@ -61,7 +69,7 @@ public class BCoins extends JavaPlugin{
                     return;
                 
                 Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://dragon-rage.eu:3306/s7_litebans", "u7_MO4RsqbDCO", "XF0BQJe3J!P7J6!0o@EkPYQR");
+                connection = DriverManager.getConnection(DBS.GetConnectionString(), DBS.GetUsername(), DBS.GetPassword());
                 System.out.println("[BCoins] MySQL connection is successfully conected");
                 
             }
@@ -69,9 +77,11 @@ public class BCoins extends JavaPlugin{
         }
         catch(SQLException e) {
             System.out.println("Error: " + e.getMessage());
+            this.getPluginLoader().disablePlugin(this);
         }
         catch(ClassNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
+            this.getPluginLoader().disablePlugin(this);
         }
         
     }
