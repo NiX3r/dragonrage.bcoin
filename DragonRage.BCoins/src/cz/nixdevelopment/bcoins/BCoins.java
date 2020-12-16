@@ -11,12 +11,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import cz.nixdevelopment.bcoins.commands.BCoinCommand;
 import cz.nixdevelopment.bcoins.commands.BShopCommand;
 import cz.nixdevelopment.bcoins.events.*;
+import cz.nixdevelopment.bcoins.instances.BCoinPlayerInstance;
 import cz.nixdevelopment.bcoins.instances.DatabaseInstance;
 import cz.nixdevelopment.bcoins.listeners.OnJoinListener;
+import cz.nixdevelopment.bcoins.listeners.OnLeaveListener;
 import cz.nixdevelopment.bcoins.utils.BCoinsUtil;
 import cz.nixdevelopment.bcoins.utils.DefaultFiles;
 import cz.nixdevelopment.bcoins.utils.MySQL;
 import cz.nixdevelopment.bcoins.utils.PAPIManager;
+import cz.nixdevelopment.bcoins.utils.ReloadBCoinsScheduler;
 
 public class BCoins extends JavaPlugin{
     
@@ -24,6 +27,7 @@ public class BCoins extends JavaPlugin{
     
     public static JavaPlugin inst;
     public static ArrayList<ShopItemEvent> items = new ArrayList<ShopItemEvent>();
+    public static ArrayList<BCoinPlayerInstance> players = new ArrayList<BCoinPlayerInstance>();
     public static String Prefix;
     
     private static Connection connection;
@@ -41,7 +45,7 @@ public class BCoins extends JavaPlugin{
         DefaultFiles.BShop();
         
         DBS = new DatabaseInstance(getConfig().getString("SQL.Host"), getConfig().getInt("SQL.Port"), getConfig().getString("SQL.Database"), getConfig().getString("SQL.User"), getConfig().getString("SQL.Pass"));
-        Prefix = getConfig().getString("Prefix");
+        Prefix = getConfig().getString("Prefix").replaceAll("&", "§");
         
         inst = this;
         setUpDatabase();
@@ -50,8 +54,10 @@ public class BCoins extends JavaPlugin{
         this.getCommand("bshop").setExecutor(new BShopCommand());
         
         Bukkit.getPluginManager().registerEvents(new OnJoinListener(), this);
+        Bukkit.getPluginManager().registerEvents(new OnLeaveListener(), this);
         MySQL.createTable();
         BCoinsUtil.LoadBShop();
+        ReloadBCoinsScheduler.Scheduler();
         
     }
     
