@@ -5,6 +5,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import cz.nixdevelopment.bcoins.BCoins;
+import cz.nixdevelopment.bcoins.instances.BCoinPlayerInstance;
 import cz.nixdevelopment.bcoins.utils.MySQL;
 
 public class OnJoinListener implements Listener {
@@ -13,6 +15,7 @@ public class OnJoinListener implements Listener {
     public static void OnJoinEvent(PlayerJoinEvent event) {
         
         MySQL.checkPlayerExists(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
+        BCoins.players.add(new BCoinPlayerInstance(event.getPlayer().getUniqueId(), event.getPlayer().getName(), MySQL.getTokens(event.getPlayer().getUniqueId().toString())));
         
     }
     

@@ -3,6 +3,7 @@ package cz.nixdevelopment.bcoins.utils;
 import org.bukkit.entity.Player;
 
 import cz.nixdevelopment.bcoins.BCoins;
+import cz.nixdevelopment.bcoins.instances.BCoinPlayerInstance;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PAPIManager extends PlaceholderExpansion{
@@ -33,10 +34,18 @@ public class PAPIManager extends PlaceholderExpansion{
         
         String output = "ERR#404";
         
-        if(identifier.equalsIgnoreCase("bc"))
-            output = String.valueOf(MySQL.getTokens(p.getUniqueId().toString())) + "BC";
-        else if(identifier.equalsIgnoreCase("nobc"))
-            output = String.valueOf(MySQL.getTokens(p.getUniqueId().toString()));
+        if(identifier.equalsIgnoreCase("bc")){
+            for(BCoinPlayerInstance bpi : BCoins.players) {
+                if(bpi.GetUUID().equals(p.getUniqueId()))
+                    return bpi.GetBC() + "BC";
+            }
+        }
+        else if(identifier.equalsIgnoreCase("nobc")){
+            for(BCoinPlayerInstance bpi : BCoins.players) {
+                if(bpi.GetUUID().equals(p.getUniqueId()))
+                    return String.valueOf(bpi.GetBC());
+            }
+        }
         else
             output = "WrongIdentifier";
         
