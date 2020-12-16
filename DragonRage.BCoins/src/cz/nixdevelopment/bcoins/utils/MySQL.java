@@ -16,13 +16,12 @@ public class MySQL {
         
         try {
             
-            PreparedStatement statement = BCoins.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS BCoins(User varchar(36),Tokens double)");
+            PreparedStatement statement = BCoins.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS BCoins(UUID varchar(36) PRIMARY KEY, Nick varchar(16), Tokens double)");
             
             if(statement.execute()) {
                 System.out.println("Table was created");
             }
             else {
-                System.out.println("Table wasn't created");
             }
             
         }
@@ -32,11 +31,11 @@ public class MySQL {
         
     }
     
-    public static void checkPlayerExists(String UUID) {
+    public static void checkPlayerExists(String UUID, String nick) {
         
         try {
             PreparedStatement statement = BCoins.getConnection()
-                    .prepareStatement("SELECT * FROM BCoins WHERE User=?");
+                    .prepareStatement("SELECT * FROM BCoins WHERE UUID=?");
             statement.setString(1, UUID);
 
             ResultSet results = statement.executeQuery();
@@ -48,9 +47,10 @@ public class MySQL {
                 //BCoins.inst.getServer().broadcastMessage(ChatColor.GREEN + "Player Inserted");
                 
                 PreparedStatement insert = BCoins.getConnection()
-                        .prepareStatement("INSERT INTO BCoins (User,Tokens) VALUES (?,?)");
+                        .prepareStatement("INSERT INTO BCoins VALUES (?,?,?)");
                 insert.setString(1, UUID);
-                insert.setDouble(2, Double.valueOf("0"));
+                insert.setString(2, nick);
+                insert.setDouble(3, Double.valueOf("0"));
                 insert.executeUpdate();
                 
             }
@@ -65,7 +65,7 @@ public class MySQL {
         
         try {
             PreparedStatement statement = BCoins.getConnection()
-                    .prepareStatement("SELECT * FROM BCoins WHERE User=?");
+                    .prepareStatement("SELECT * FROM BCoins WHERE UUID=?");
             statement.setString(1, UUID);
             
             ResultSet results = statement.executeQuery();
@@ -84,7 +84,7 @@ public class MySQL {
         
         try {
             PreparedStatement statement = BCoins.getConnection()
-                    .prepareStatement("UPDATE BCoins SET Tokens=? WHERE User=?");
+                    .prepareStatement("UPDATE BCoins SET Tokens=? WHERE UUID=?");
             statement.setDouble(1, toSet);
             statement.setString(2, UUID);
             statement.executeUpdate();

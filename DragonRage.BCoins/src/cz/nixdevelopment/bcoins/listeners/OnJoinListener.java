@@ -12,7 +12,7 @@ public class OnJoinListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public static void OnJoinEvent(PlayerJoinEvent event) {
         
-        MySQL.checkPlayerExists(event.getPlayer().getUniqueId().toString());
+        MySQL.checkPlayerExists(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         
     }
     
