@@ -10,14 +10,22 @@ import cz.nixdevelopment.bcoins.instances.BCoinPlayerInstance;
 
 public class OnLeaveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
-    public static void OnJoinEvent(PlayerQuitEvent event) {
+    public static void OnLeaveEvent(PlayerQuitEvent event) {
         
-        for(BCoinPlayerInstance bpi : BCoins.players) {
+        if(!BCoins.players.isEmpty()) {
             
-            if(bpi.GetUUID().equals(event.getPlayer().getUniqueId())) {
-                BCoins.players.remove(bpi);
+            if(BCoins.players.size() == 1) {
+                BCoins.players.remove(0);
+                return;
             }
             
+            for(BCoinPlayerInstance bpi : BCoins.players) {
+                
+                if(bpi.GetUUID().equals(event.getPlayer().getUniqueId())) {
+                    BCoins.players.remove(bpi);
+                }
+                
+            }
         }
         
     }

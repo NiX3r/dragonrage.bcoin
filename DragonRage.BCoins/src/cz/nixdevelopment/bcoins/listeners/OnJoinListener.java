@@ -1,5 +1,6 @@
 package cz.nixdevelopment.bcoins.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +17,8 @@ public class OnJoinListener implements Listener {
         
         MySQL.checkPlayerExists(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName());
         BCoins.players.add(new BCoinPlayerInstance(event.getPlayer().getUniqueId(), event.getPlayer().getName(), MySQL.getTokens(event.getPlayer().getUniqueId().toString())));
+        
+        Bukkit.broadcastMessage("Pocet hracu " + BCoins.players.size());
         
     }
     
